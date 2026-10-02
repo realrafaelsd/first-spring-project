@@ -4,9 +4,7 @@ import br.com.fiap.bo.RemedioBO;
 import br.com.fiap.to.RemedioTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +25,16 @@ public class RemedioResource {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(remedios); //configurando o retorno com status Not_found-404- e
             // a lista de remedios encontrados
 
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> save(@RequestBody RemedioTO remedio) {
+        try {
+            RemedioTO  resultado = remedioBO.save(remedio);
+            return ResponseEntity.status(HttpStatus.CREATED).body(remedio);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao salvar remédio");
         }
     }
 
